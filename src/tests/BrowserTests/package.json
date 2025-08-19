@@ -1,0 +1,11 @@
+{
+  "name": "web-e2e",
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.47.0"
+  },
+  "scripts": {
+    "install:browsers": "npx playwright install --with-deps",
+    "test": "npx playwright test"
+  }
+}
