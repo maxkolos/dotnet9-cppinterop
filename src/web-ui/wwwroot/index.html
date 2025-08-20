@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>AI-based string reversion</title>
+</head>
+<body>
+    <h3>Enter a string to reverse</h3>
+    <input id="inputBox" placeholder="Enter a string..." />
+    <button id="button" onclick="onClick()">Reverse</button>
+    <p id="result"></p>
+
+    <script>
+        async function onClick() {
+            const text = document.getElementById('inputBox').value;
+            const response = await fetch('/reverse', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ text: text })
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = "Result: " + data.reversed;
+        }
+    </script>
+</body>
+</html>

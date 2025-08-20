@@ -51,7 +51,6 @@ packages/
 .nuget/
 
 # ASP.NET / Web API
-wwwroot/
 appsettings.Development.json
 appsettings.Local.json
 *.db
