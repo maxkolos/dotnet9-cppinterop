@@ -1,0 +1,85 @@
+# ==========================
+# C++ / CMake / Build files
+# ==========================
+# Compiled object files
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+
+# Build directories
+/build/
+/bin/
+/lib/
+/Debug/
+/Release/
+
+# Dependencies
+/third_party/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.log
+
+# ==========================
+# C# / .NET / Web API
+# ==========================
+# Visual Studio / Rider
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+bin/
+obj/
+Debug/
+Release/
+TestResults/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# ASP.NET / Web API
+wwwroot/
+appsettings.Development.json
+appsettings.Local.json
+*.db
+*.mdb
+
+# ==========================
+# Docker
+# ==========================
+# Docker images
+*.tar
+docker-compose.override.yml
+
+# ==========================
+# General
+# ==========================
+# OS files
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+
+# IDE specific
+.idea/
+*.code-workspace
+
+# ==========================
+# PlayWrite
+# ==========================
+/node_modules/
+package-lock.json

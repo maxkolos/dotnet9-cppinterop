@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StringService\StringService.csproj" />
+  </ItemGroup>
+
+  <!-- Build C++ library to the output path. -->
+  <Target Name="BuildCppLibrary" BeforeTargets="Build">
+    <!-- As C++ is built before the main project, make sure the output dir exists. -->
+    <MakeDir Directories="$(OutputPath)" />
+    <Exec Command="g++ -shared -fPIC ../CppLibrary/reverse_string.cpp -o $(OutputPath)libreverse_string.so" />
+  </Target>
+
+  <!-- Copy C++ library to the publish folder. -->
+  <Target Name="CopyCppLibraryToPublish" AfterTargets="Publish">
+    <Copy SourceFiles="$(OutputPath)libreverse_string.so" DestinationFolder="$(PublishDir)" />
+  </Target>
+
+</Project>

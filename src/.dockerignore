@@ -1,0 +1,7 @@
+bin/
+obj/
+tests/
+*.md
+*.log
+.git
+# TODO: Revisit the list once the whole project has stabilized.
