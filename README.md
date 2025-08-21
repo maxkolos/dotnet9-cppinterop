@@ -29,22 +29,11 @@ sequenceDiagram
 
 ## Prerequisites
 
-Before running the project, make sure your environment has the required tools installed.
-
-### .NET 9 SDK
-
-As of August 2025, .NET 9 SDK is not yet available out-of-the-box or via standard Linux package managers. To install it, run the provided script:
+Before running the project, make sure your environment has the required tools installed. In particular, as of August 2025 .NET 9 SDK is not yet available out-of-the-box or via standard Linux package managers. 
 
 ```bash
-sh install_dotnet9.sh
+sh install_deps.sh
 ```
-
-This script uses the official Microsoft installer to download and configure .NET 9.
-After running it, the `dotnet` command will be available for building and running the project.
-
-### Test libraries and tools
-
-TODO: Some tests require additional native libraries or tools to run correctly out-of-the-box. Update this section and/or installation scripts.
 
 ## How to run
 
