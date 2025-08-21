@@ -22,8 +22,22 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "Waiting for container..."
-sleep 2
+echo "Waiting for container to be ready..."
+MAX_RETRIES=30
+for i in $(seq 1 $MAX_RETRIES); do
+    if curl -s -o /dev/null http://localhost:8080/healthz; then
+        echo "Container is ready!"
+        break
+    fi
+    echo "[$i/$MAX_RETRIES] Not ready yet..."
+    sleep 1
+done
+if [ $i -eq $MAX_RETRIES ]; then
+    echo "Container did not become ready in time"
+    docker logs "$CID"
+    docker rm -f "$CID"
+    exit 1
+fi
 
 # Smoke: POST /Reverse.
 RES=$(curl -s -X POST -H "Content-Type: application/json" localhost:8080/Reverse -d '{"text":"smoke"}' 2>/dev/null)
