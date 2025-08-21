@@ -87,4 +87,3 @@ cd src/tests
 ```bash 
 sh run_all_tests.sh
 ```
-Note: browser tests (`test/BrowserTests`) needs a .NET application running from another terminal before the tests start. 
