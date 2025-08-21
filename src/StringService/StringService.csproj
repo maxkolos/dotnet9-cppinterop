@@ -4,4 +4,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <!-- TODO: Add building and copying libreverse_string.so that would work for dependent projects. -->
+
 </Project>

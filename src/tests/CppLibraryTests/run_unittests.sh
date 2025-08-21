@@ -7,6 +7,9 @@ BUILD_DIR="$LIBRARY_TESTS_DIR"/bin
 THIRD_PARTY="../../third_party"
 CATCH_FILE="$THIRD_PARTY/catch.hpp"
 
+mkdir -p "$THIRD_PARTY"
+mkdir -p "$BUILD_DIR"
+
 # Make sure the catch library is downloaded.
 if [ ! -f "$CATCH_FILE" ]; then
     echo "Downloading Catch2 (v2.13.10)..."
