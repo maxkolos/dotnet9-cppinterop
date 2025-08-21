@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -x
+set -e
 
 LIBRARY_TESTS_DIR=$(pwd)
 

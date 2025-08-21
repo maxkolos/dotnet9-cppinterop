@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -x
+set -e
 
 IMAGE_TAG="web-ui:test"
 
