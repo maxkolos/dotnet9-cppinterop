@@ -81,5 +81,6 @@ Thumbs.db
 # ==========================
 # PlayWrite
 # ==========================
-/node_modules/
+/node_modules/*
+/test-results/*
 package-lock.json
