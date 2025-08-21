@@ -1,4 +1,6 @@
+#!/usr/bin/env bash
 set -x
+set -e
 
 # Check whether clang is installed.
 if ! command -v clang >/dev/null 2>&1; then
