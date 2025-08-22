@@ -5,6 +5,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <!-- TODO: Add building and copying libreverse_string.so that would work for dependent projects. -->
+  <Target Name="BuildCppLibrary" BeforeTargets="Build">
+    <!-- As C++ is built before the main project, make sure the output dir exists. -->
+    <MakeDir Directories="$(OutputPath)" />
+    <Exec Command="g++ -shared -fPIC ../CppLibrary/reverse_string.cpp -o $(OutputPath)libreverse_string.so" />
+    <!-- Tell MSBuild that this .so file is an output of the target -->
+    <ItemGroup>
+      <NativeLibraryOutput Include="$(OutputPath)libreverse_string.so" />
+    </ItemGroup>
+  </Target>
+
+  <!-- TODO: Copying to dependent projects doesn't actually happen. -->
+  <Target Name="ProvideNativeLibrary" DependsOnTargets="BuildCppLibrary">
+    <!-- Make this output visible to referencing projects -->
+    <ItemGroup>
+      <BuiltProjectOutputGroupOutput Include="@(NativeLibraryOutput)" />
+    </ItemGroup>
+  </Target>
 
 </Project>
+

@@ -17,7 +17,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
   </ItemGroup>
 
-  <!-- TODO: Ideally, this should be redundant as StringService builds the C++ library and copies to output -->
+  <!-- TODO: This should be unnecessary — StringService ought to build the C++ library and copy the .so
+       file to dependent binaries. But with the recommended commands, the copy step doesn’t happen. -->
   <Target Name="BuildCppLibrary" BeforeTargets="Build">
     <!-- As C++ is built before the main project, make sure the output dir exists. -->
     <MakeDir Directories="$(OutputPath)" />
