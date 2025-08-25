@@ -5,8 +5,12 @@ ARG BASE_IMAGE=9.0.302-bookworm-slim
 FROM mcr.microsoft.com/dotnet/sdk:${BASE_IMAGE} AS build
 WORKDIR /app
 
-# Install g++ to build C++ library.
-RUN apt-get update && apt-get install -y g++ && rm -rf /var/lib/apt/lists/*
+# Install build dependencies: g++ and cmake.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy files to the container.
 # TODO: Consider more selective copying (e.g. only web-ui/ and CppLibrary).

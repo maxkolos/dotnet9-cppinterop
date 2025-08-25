@@ -2,5 +2,6 @@
 set -x
 set -e
 
-cmake -B bin
+cmake -S . -B bin
 cmake --build bin
+./bin/test_reverse_string

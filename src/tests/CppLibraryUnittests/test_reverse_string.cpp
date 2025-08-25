@@ -1,11 +1,10 @@
 #define CATCH_CONFIG_MAIN
-// TODO: Consider to move this to third_party/ and not commit catch.hpp. 
 #include <codecvt>
 #include <iterator>
 #include <locale>
 #include <string>
 
-#include "catch.hpp" 
+#include "catch2/catch.hpp" 
 
 #include "reverse_string.h"
 

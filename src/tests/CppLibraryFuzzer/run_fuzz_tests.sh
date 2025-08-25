@@ -10,11 +10,10 @@ if ! command -v clang >/dev/null 2>&1; then
     echo "clang is installed: $(clang --version | head -n1)"
 fi
 
-mkdir -p bin
+BUILD_DIR=bin
 
-clang++ -g -O1 -fsanitize=fuzzer,address,undefined \
-  -I../../CppLibrary \
-  test_reverse_string_fuzz.cpp \
-  ../../CppLibrary/reverse_string.cpp \
-  -o bin/fuzz_reverse_string && \
-bin/fuzz_reverse_string -max_total_time=5
+mkdir -p "$BUILD_DIR"
+
+cmake -S . -B "$BUILD_DIR" -DCMAKE_CXX_COMPILER=clang++ 
+cmake --build "$BUILD_DIR" --target fuzz_reverse_string
+"$BUILD_DIR/fuzz_reverse_string" -max_total_time=5

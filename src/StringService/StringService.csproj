@@ -8,10 +8,11 @@
   <Target Name="BuildCppLibrary" BeforeTargets="Build">
     <!-- As C++ is built before the main project, make sure the output dir exists. -->
     <MakeDir Directories="$(OutputPath)" />
-    <Exec Command="g++ -shared -fPIC ../CppLibrary/reverse_string.cpp -o $(OutputPath)libreverse_string.so" />
+    <Exec Command="cmake -S ../CppLibrary -B $(OutputPath) -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=." />
+    <Exec Command="cmake --build $(OutputPath) --config $(Configuration)" />  
     <!-- Tell MSBuild that this .so file is an output of the target -->
     <ItemGroup>
-      <NativeLibraryOutput Include="$(OutputPath)libreverse_string.so" />
+      <NativeLibraryOutput Include="$(OutputPath)reverse_string.so" />
     </ItemGroup>
   </Target>
 
@@ -24,4 +25,3 @@
   </Target>
 
 </Project>
-
