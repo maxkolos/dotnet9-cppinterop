@@ -14,7 +14,12 @@ namespace StringService
 
         static StringReverser()
         {
-            var libPath = Path.Combine(AppContext.BaseDirectory, "reverse_string.so");
+            string libName = "reverse_string";
+            string libExtension = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".dll" :
+                               RuntimeInformation.IsOSPlatform(OSPlatform.Linux)   ? ".so"  :
+                               RuntimeInformation.IsOSPlatform(OSPlatform.OSX)     ? ".dylib" :
+                               throw new PlatformNotSupportedException("Unsupported OS");
+            var libPath = Path.Combine(AppContext.BaseDirectory, libName + libExtension);
             _libHandle = NativeLibrary.Load(libPath);
 
             if (!NativeLibrary.TryGetExport(_libHandle, "reverse_char16_array", out IntPtr reverseFuncPtr))
