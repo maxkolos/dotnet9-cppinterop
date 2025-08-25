@@ -29,10 +29,17 @@ sequenceDiagram
 
 ## Prerequisites
 
-Before running the project, make sure your environment has the required tools installed. In particular, as of August 2025 .NET 9 SDK is not yet available out-of-the-box or via standard Linux package managers. 
+Before running the project, make sure your environment has the required tools installed by running. In particular, as of August 2025 .NET 9 SDK is not yet available out-of-the-box or via standard Linux package managers. 
+
+Run (from the root folder):
+```bash
+make setup
+```
+
+Additionally, you can make a sanity check by running (from the root folder):
 
 ```bash
-sh install_deps.sh
+make build_and_test
 ```
 
 ## How to run
@@ -40,39 +47,28 @@ sh install_deps.sh
 ### Run locally
 
 0. Open a terminal.
-1. Switch folder
+1. Run (from the root folder)
 ```bash 
-cd src/web-ui
+make run-server
 ```
-2. Run 
-```bash 
-sh dotnet_run.sh
-``` 
-4. The .NET 9 Web API application will be built and started.
-5. In the Codespaces interface, either click "Open in browser" in a popup dialog or click **Ports** and forward the port your Web API is using (default: 5000). Then, click the **Open in Browser** link next to the forwarded port to access the web page.
+2. The .NET 9 Web API application will be built and started.
+3. In the Codespaces interface, either click "Open in browser" in a popup dialog or click **Ports** and forward the port your Web API is using (default: 5000). Then, click the **Open in Browser** link next to the forwarded port to access the web page.
 
 ### Run with Docker
 
 0. Open a terminal.
-1. Switch folder
-```bash
-cd src/
-```
-2. Run 
+1. Run (from the root folder)
 ```bash 
-sh docker_run.sh
+make docker-run
 ```
-3. Docker container will be built and deployed.
-4. In the Codespaces interface, either click "Open in browser" in a popup dialog or click **Ports** and forward the port your Web API is using (default: 8080). Then, click the **Open in Browser** link next to the forwarded port to access the web page.
+2. Docker container will be built and deployed.
+3. In the Codespaces interface, either click "Open in browser" in a popup dialog or click **Ports** and forward the port your Web API is using (default: 8080). Then, click the **Open in Browser** link next to the forwarded port to access the web page.
 
-## How to test
+# How to test
 
 0. Open a terminal.
-1. Switch folder
-```bash
-cd src/tests
-```
-2. Run
+1. Run (from the root folder):
 ```bash 
-sh run_all_tests.sh
+make test
 ```
+You can also run a specific test (e.g. `make test-cpp-unit`). See other targets in `Makefile`.
