@@ -18,3 +18,4 @@ target_link_libraries(test_reverse_string PRIVATE reverse_string)
 
 target_include_directories(test_reverse_string PRIVATE
     ${catch2_SOURCE_DIR}/single_include)
+target_include_directories(test_reverse_string PRIVATE ../../CppLibrary)
