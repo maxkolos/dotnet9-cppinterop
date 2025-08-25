@@ -32,6 +32,7 @@ IMAGE_TAG="web-ui:test"
 # -----------------------------
 # Dependencies installation
 # -----------------------------
+# TODO: Add the setup to Codespace creation routine.
 # TODO: Add checks of whether a dependency is already installed.
 setup: install-dotnet install-node install-playwright
 	@echo "Setup complete!"
