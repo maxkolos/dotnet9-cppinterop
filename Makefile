@@ -1,3 +1,4 @@
+# TODO: add an alias for make and make all file paths absolute so that make can be invoked from any folder.
 DOTNET_DIR=src/web-ui/
 DOTNET_APP=$(DOTNET_DIR)/web-ui.csproj
 SERVICE_PROJECT=src/StringService/StringService.csproj
@@ -15,6 +16,7 @@ STRING_SERVICE_DIR=src/tests/StringService.Tests
 DOCKER_DIR=src/tests/DockerSmokeTest
 WEBUI_TEST_DIR=src/tests/web-ui.Tests
 BROWSER_TEST_DIR=src/tests/BrowserTests
+DOCKER_SMOKE_TEST=src/tests/DockerSmokeTest/run_docker_smoke_test.sh
 DOCKERFILE_PATH=src/Dockerfile
 DOCKER_CONTEXT=src/
 IMAGE_NAME=web-ui
@@ -111,20 +113,8 @@ test-string-service:
 	dotnet test $(STRING_SERVICE_DIR)
 
 test-docker:
-	@echo "Running Docker smoke test..."
-	docker build -t $(IMAGE_TAG) -f $(DOCKERFILE_PATH) $(DOCKER_CONTEXT)
-	CID=$$(docker run -d -p 8080:8080 $(IMAGE_TAG)); \
-	echo "Waiting for container to be ready..."; \
-	MAX_RETRIES=30; \
-	for i in $$(seq 1 $$MAX_RETRIES); do \
-		if curl -s -o /dev/null http://localhost:8080/healthz; then \
-			echo "Container is ready!"; break; \
-		fi; \
-		sleep 1; \
-	done; \
-	RES=$$(curl -s -X POST -H "Content-Type: application/json" localhost:8080/Reverse -d '{"text":"smoke"}'); \
-	echo "$$RES" | grep '"reversed":"ekoms"' >/dev/null && echo "Docker smoke test succeeded!" || (docker logs $$CID; docker rm -f $$CID; exit 1); \
-	docker rm -f $$CID
+	@echo "Running Docker smoke test via script..."
+	@bash "$(DOCKER_SMOKE_TEST)"
 
 test-server:
 	@echo "Running Web-UI tests..."

@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -x
-set -e
-
-cmake -B bin
-cmake --build bin
