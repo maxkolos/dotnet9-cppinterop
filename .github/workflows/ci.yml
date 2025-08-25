@@ -1,41 +1,47 @@
-name: CI
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-  workflow_dispatch:
-
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up .NET 9
-        uses: actions/setup-dotnet@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 9.0.x
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 20.x
 
-      - name: Install dependencies
-        run: make setup
+      - name: Install Playwright
+        run: |
+          cd src/tests/BrowserTests
+          npm ci
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            CI=true npx playwright install --with-deps
+          else
+            npx playwright install
+          fi
 
       - name: Build all projects
         run: make build
 
-      - name: Run all tests
-        run: make test
-
-      - name: Build Docker image
-        run: make docker-build
-
-      - name: Cleanup Docker
-        run: make docker-clean
+      - name: Run tests
+        run: |
+          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            make test
+            make docker-build
+            make docker-clean
+          else
+            make test-cpp-unit
+            make test-string-service
+            make test-server
+            # Browser tests workaround
+            pwsh -c '
+              Start-Job { dotnet run --project src/web-ui/web-ui.csproj } | Out-Null;
+              Start-Sleep -Seconds 5;
+              cd src/tests/BrowserTests;
+              npm test
+            '
+          fi
