@@ -28,31 +28,34 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Install Playwright
+      # - name: Install Playwright
+      #   run: |
+      #     cd src/tests/BrowserTests
+      #     npm ci
+      #     if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+      #       CI=true npx playwright install --with-deps
+      #     else
+      #       npx playwright install
+      #     fi
+      #   shell: bash
+      - name: Install Playwright browsers
         run: |
           cd src/tests/BrowserTests
           npm ci
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            CI=true npx playwright install --with-deps
-          else
-            npx playwright install
-          fi
-        shell: bash
+          npx playwright install
+        env:
+          CI: 1
 
       - name: Build all projects
         run: make build
 
       - name: Run tests
         run: |
+          make test-multios
           if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            make test
-            make docker-build
-            make docker-clean
+            make test-browser
           else
-            make test-cpp-unit
-            make test-string-service
-            make test-server
-            # Browser tests (PowerShell вместо kill)
+            # Browser tests (PowerShell instead of kill)
             pwsh -c '
               Start-Job { dotnet run --project src/web-ui/web-ui.csproj } | Out-Null;
               Start-Sleep -Seconds 5;
@@ -60,4 +63,14 @@ jobs:
               npm test
             '
           fi
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+            make test-docker
+          fi
         shell: bash
+
+      - name: Build Docker image
+        run: |
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+               make docker-build
+          fi
+          

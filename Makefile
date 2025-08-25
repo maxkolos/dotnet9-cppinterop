@@ -136,8 +136,11 @@ test-browser:
 		sleep 4; \
 		exit $$TEST_EXIT_CODE \
 	'
+test-multios: test-cpp-unit test-string-service  test-server
 
-test: test-cpp-unit test-cpp-fuzz test-string-service test-docker test-server test-browser
+test-linux:test-cpp-fuzz test-docker test-browser
+
+test: test-multios test-linux
 	@echo "All tests passed!"
 
 # -----------------------------
